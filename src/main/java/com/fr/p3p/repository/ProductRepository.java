@@ -10,4 +10,5 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	
 		List<Product> findByIsDeleted(Boolean deleted);
 		List<Product> findByCategory(String category);
+		Product findByNameAndCategory(String name, String category);
 }

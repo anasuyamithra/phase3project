@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fr.p3p.model.request.ProductRequest;
 import com.fr.p3p.model.response.MSResponse;
 import com.fr.p3p.service.ProductService;
 
@@ -28,6 +29,8 @@ public class ProductController {
 		return productService.getProductByCategory(categories);
 	}
 	
-//	@PostMapping
-//	public MSResponse addProduct(@RequestBody)
+	@PostMapping
+	public MSResponse addProduct(@RequestBody ProductRequest req) {
+		return productService.addProduct(req);
+	}
 }
