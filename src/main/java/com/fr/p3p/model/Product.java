@@ -22,6 +22,17 @@ public class Product {
 	
 	@Column
 	private String category;
+	
+	@Column
+	private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 
 	public String getName() {
 		return name;
