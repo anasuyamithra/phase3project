@@ -24,10 +24,32 @@ public class Product {
 	private String category;
 	
 	@Column
+	private Long price;
+	
+	@Column
+	private Long quantity;
+	
+	@Column
 	private Boolean isDeleted = false;
 
 	public Boolean getIsDeleted() {
 		return isDeleted;
+	}
+
+	public Long getPrice() {
+		return price;
+	}
+
+	public void setPrice(Long price) {
+		this.price = price;
+	}
+
+	public Long getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Long quantity) {
+		this.quantity = quantity;
 	}
 
 	public void setIsDeleted(Boolean isDeleted) {

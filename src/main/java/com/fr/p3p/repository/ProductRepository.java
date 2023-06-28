@@ -8,7 +8,8 @@ import com.fr.p3p.model.Product;
 
 public interface ProductRepository extends JpaRepository<Product, String> {
 	
-		List<Product> findByIsDeleted(Boolean deleted);
+		List<Product> findByIsDeleted(Boolean isDeleted);
 		List<Product> findByCategory(String category);
-		Product findByNameAndCategory(String name, String category);
+		Product findByNameAndCategoryAndIsDeleted(String name, String category, Boolean isDeleted);
+		Product findByIdAndIsDeleted(String id, Boolean isDeleted);
 }

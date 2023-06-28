@@ -32,8 +32,19 @@ public class User {
     @Column(nullable = false)
     private Boolean isAdmin=false;
     
-    @Column
+    @Column(nullable = false)
+    private Boolean isDeleted=false;
+    
+	@Column
     private List<String> transaction_ids = new ArrayList<>();
+    
+    public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 
 	public String getUsername() {
 		return username;
