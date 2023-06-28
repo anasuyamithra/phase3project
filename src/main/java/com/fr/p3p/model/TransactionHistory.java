@@ -1,6 +1,6 @@
 package com.fr.p3p.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,38 +20,38 @@ public class TransactionHistory {
     private String id;
 
     @Column(nullable = false, unique = true)
-    private String product_id;
+    private String productId;
 
     @Column(nullable = false)
-    private String user_id;
+    private String userId;
     
     @Column(name = "purchase_date")
-    private LocalDate purchaseDate;
+    private LocalDateTime purchaseDate;
 
     @Column(name = "quantity")
     private int quantity;
 
 	public String getProduct_id() {
-		return product_id;
+		return productId;
 	}
 
 	public void setProduct_id(String product_id) {
-		this.product_id = product_id;
+		this.productId = product_id;
 	}
 
 	public String getUser_id() {
-		return user_id;
+		return userId;
 	}
 
 	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+		this.userId = user_id;
 	}
 
-	public LocalDate getPurchaseDate() {
+	public LocalDateTime getPurchaseDate() {
 		return purchaseDate;
 	}
 
-	public void setPurchaseDate(LocalDate purchaseDate) {
+	public void setPurchaseDate(LocalDateTime purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
 
