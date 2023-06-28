@@ -29,10 +29,10 @@ public class User {
     @Column(nullable = false)
     private String email;
     
-    @Column(nullable = false)
+    @Column
     private Boolean isAdmin=false;
     
-    @Column(nullable = false)
+    @Column
     private Boolean isDeleted=false;
     
 	@Column

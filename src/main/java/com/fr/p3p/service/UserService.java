@@ -10,4 +10,5 @@ public interface UserService {
 	public MSResponse getUserById(String id);
 	public MSResponse deleteUser(String id);
 	public MSResponse login(AuthRequest req);
+	public MSResponse updateUser(UserRequest req, String id);
 }
