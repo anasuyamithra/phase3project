@@ -7,8 +7,8 @@ public interface ProductService {
 	
 	public MSResponse getAllProducts();
 	public MSResponse getProductByCategory(String categories);
-	public MSResponse addProduct(ProductRequest req);
-	public MSResponse updateProduct(ProductRequest req, String id);
-	public MSResponse deleteProduct(String id);
+	public MSResponse addProduct(ProductRequest req, String token);
+	public MSResponse updateProduct(ProductRequest req, String id, String token);
+	public MSResponse deleteProduct(String id, String token);
 
 }

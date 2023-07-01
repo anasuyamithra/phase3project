@@ -33,18 +33,18 @@ public class ProductController {
 	}
 	
 	@PostMapping
-	public MSResponse addProduct(@RequestBody ProductRequest req) {
-		return productService.addProduct(req);
+	public MSResponse addProduct(@RequestBody ProductRequest req, @RequestParam String token) {
+		return productService.addProduct(req, token);
 	}
 	
 	@PutMapping("/{id}")
 	public MSResponse updateProduct(@RequestBody ProductRequest req, 
-									@PathVariable String id) {
-		return productService.updateProduct(req, id);
+									@PathVariable String id, @RequestParam String token) {
+		return productService.updateProduct(req, id, token);
 	}
 	
 	@DeleteMapping("/{id}")
-	public MSResponse deleteProduct(@PathVariable String id) {
-		return productService.deleteProduct(id);
+	public MSResponse deleteProduct(@PathVariable String id, @RequestParam String token) {
+		return productService.deleteProduct(id, token);
 	}
 }

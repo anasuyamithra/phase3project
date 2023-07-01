@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.fr.p3p.model.response.MSResponse;
 import com.fr.p3p.repository.ProductRepository;
 import com.fr.p3p.service.ProductService;
+import com.fr.p3p.utils.AuthUtils;
 import com.fr.p3p.utils.ErrorCode;
 import com.fr.p3p.utils.MSException;
 import com.fr.p3p.utils.ResponseHelper;
@@ -19,6 +20,9 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Autowired
 	private ProductRepository productRepo;
+	
+	@Autowired
+	AuthUtils auth; 
 
 	public MSResponse getAllProducts() {
 		List<Product> products = productRepo.findByIsDeleted(false);
@@ -30,7 +34,8 @@ public class ProductServiceImpl implements ProductService{
 		return ResponseHelper.createResponse(products, "Products retrieved successfully.", "Failed to retrieve products.");
 	}
 	
-	public MSResponse addProduct(ProductRequest req) {
+	public MSResponse addProduct(ProductRequest req, String token) {
+		String s = auth.checkAuth(token);
 		Product prod = null;
 		String cat = (req.getCategory().trim()).toUpperCase();
 		prod = productRepo.findByNameAndCategoryAndIsDeleted(req.getName(), cat, false);
@@ -48,7 +53,8 @@ public class ProductServiceImpl implements ProductService{
 		return ResponseHelper.createResponse(prod, "Product added successfully.", "Failed to add product.");
 	}
 	
-	public MSResponse updateProduct(ProductRequest req, String id) {
+	public MSResponse updateProduct(ProductRequest req, String id, String token) {
+		String s = auth.checkAuth(token);
 		Product prod = null;
 		prod = productRepo.findByIdAndIsDeleted(id, false);
 		
@@ -74,7 +80,8 @@ public class ProductServiceImpl implements ProductService{
 		return ResponseHelper.createResponse(prod, "Product updated successfully.", "Failed to update product.");
 	}
 	
-	public MSResponse deleteProduct(String id) {
+	public MSResponse deleteProduct(String id, String token) {
+		String s = auth.checkAuth(token);
 		Product prod = null;
 		prod = productRepo.findByIdAndIsDeleted(id, false);
 		
