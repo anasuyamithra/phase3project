@@ -6,6 +6,10 @@ public class MSException extends RuntimeException{
 		private Integer errorCode;
 		private Boolean status = false;
 		private String message;
+		
+		public MSException() {
+			super();
+		}
 
 		public MSException(String message) {
 			super(message);
