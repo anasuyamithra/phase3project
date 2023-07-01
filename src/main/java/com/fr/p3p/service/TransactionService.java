@@ -9,12 +9,12 @@ public interface TransactionService {
 
 	MSResponse createPurchase(TransactionRequest req);
 
-	MSResponse getAllPurchases();
+	MSResponse getAllPurchases(String token);
 	
 	MSResponse getPurchasesByDate(LocalDateTime startDate, LocalDateTime endDate);
 	
 	MSResponse getPurchasesByUserId(String id);
 
-	MSResponse deletePurchase(String id);
+	MSResponse deletePurchase(String id, String token);
 
 }

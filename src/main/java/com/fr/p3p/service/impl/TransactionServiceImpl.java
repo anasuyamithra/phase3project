@@ -11,6 +11,7 @@ import com.fr.p3p.model.request.TransactionRequest;
 import com.fr.p3p.model.response.MSResponse;
 import com.fr.p3p.repository.TransactionRepository;
 import com.fr.p3p.service.TransactionService;
+import com.fr.p3p.utils.AuthUtils;
 import com.fr.p3p.utils.ErrorCode;
 import com.fr.p3p.utils.MSException;
 import com.fr.p3p.utils.ResponseHelper;
@@ -21,6 +22,9 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Autowired
 	TransactionRepository transRepo;
+	
+	@Autowired
+	AuthUtils auth; 
 	
 	public MSResponse createPurchase(TransactionRequest req) {
 		TransactionHistory trans = new TransactionHistory();
@@ -35,7 +39,8 @@ public class TransactionServiceImpl implements TransactionService {
 		return ResponseHelper.createResponse(trans, "Transaction made successfully.", "Failed to make transaction."); 
 	}
 	
-	public MSResponse getAllPurchases() {
+	public MSResponse getAllPurchases(String token) {
+		String s = auth.checkAuth(token);
 		List<TransactionHistory> transList = transRepo.findByIsDeleted(false);
 		return ResponseHelper.createResponse(transList, "Transactions retrieved successfully.", "Failed to retrieve transactions."); 
 	}
@@ -51,7 +56,8 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public MSResponse deletePurchase(String id) {
+	public MSResponse deletePurchase(String id, String token) {
+		String s = auth.checkAuth(token);
 		TransactionHistory trans = null;
 		trans = transRepo.findByIdAndIsDeleted(id, false);
 		

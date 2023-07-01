@@ -25,23 +25,23 @@ public class TransactionController {
 	TransactionService transService;
 	
 	@PostMapping
-	public MSResponse createPurchase(@RequestBody TransactionRequest req) {
+	public MSResponse createPurchase(@RequestBody TransactionRequest req, @RequestParam String token) {
 		return transService.createPurchase(req);
 	}
 	
 	@GetMapping
-	public MSResponse getAllPurchases() {
-		return transService.getAllPurchases();
+	public MSResponse getAllPurchases(@RequestParam String token) {
+		return transService.getAllPurchases(token);
 	}
 	
 	@GetMapping("/{id}")
-	public MSResponse getPurchasesByUserId(@PathVariable String id) {
+	public MSResponse getPurchasesByUserId(@PathVariable String id, @RequestParam String token) {
 		return transService.getPurchasesByUserId(id);
 	}
 	
 	@GetMapping("/date")
 	public MSResponse getPurchasesByDate(@RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate, @RequestParam String token) {
 		
 		//USE FORMAT AS FOLLOWS: startDate=2023-06-27T09:00:00     endDate=2023-06-28T18:00:00   (YYYY-MM-DDTHH:MM:SS)
 
@@ -49,8 +49,8 @@ public class TransactionController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public MSResponse deletePurchaseReport(@PathVariable String id) {
-		return transService.deletePurchase(id);
+	public MSResponse deletePurchaseReport(@PathVariable String id, @RequestParam String token) {
+		return transService.deletePurchase(id, token);
 	}
 	
 }
