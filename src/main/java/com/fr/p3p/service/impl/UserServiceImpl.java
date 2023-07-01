@@ -1,7 +1,7 @@
 package com.fr.p3p.service.impl;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +12,7 @@ import com.fr.p3p.model.request.UserRequest;
 import com.fr.p3p.model.response.MSResponse;
 import com.fr.p3p.repository.UserRepository;
 import com.fr.p3p.service.UserService;
+import com.fr.p3p.utils.AuthUtils;
 import com.fr.p3p.utils.ErrorCode;
 import com.fr.p3p.utils.MSException;
 import com.fr.p3p.utils.ResponseHelper;
@@ -21,6 +22,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	AuthUtils auth; 
 	
 	public MSResponse addUser(UserRequest req) {
 		User user = null;
@@ -45,17 +49,20 @@ public class UserServiceImpl implements UserService {
 		return ResponseHelper.createResponse(user, "User added successfully.", "Failed to add User.");
 	}
 	
-	public MSResponse getAllUsers() {
+	public MSResponse getAllUsers(String token) {
+		String s = auth.checkAuth(token);
 		List<User> users = userRepo.findByIsDeleted(false);
 		return ResponseHelper.createResponse(users, "Users retrieved successfully.", "Failed to retrieve users.");
 	}
 	
-	public MSResponse getUserById(String id) {
+	public MSResponse getUserById(String id, String token) {
+		String s = auth.checkAuth(token);
 		User user = userRepo.findByIdAndIsDeleted(id, false);
 		return ResponseHelper.createResponse(user, "User retrieved successfully.", "Failed to retrieve user.");
 	}
 	
-	public MSResponse deleteUser(String id) {
+	public MSResponse deleteUser(String id, String token) {
+		String s = auth.checkAuth(token);
 		User user = null;
 		user = userRepo.findByIdAndIsDeleted(id, false);
 		
@@ -82,11 +89,30 @@ public class UserServiceImpl implements UserService {
 			throw new MSException(ErrorCode.BAD_REQUEST, "Wrong Password.");
 		}
 		
-		return ResponseHelper.createResponse("", "Logged in successfully.", "Failed to login.");
+		String token = UUID.randomUUID().toString();
+		user.setSessionKey(token);
+		userRepo.save(user);
+		
+		return ResponseHelper.createResponse("token: "+user.getSessionKey(), "Logged in successfully.", "Failed to login.");
+	}
+	
+	public MSResponse logout(String token) {
+		User user=null;
+		user=userRepo.findBySessionKey(token);
+		
+		if(user==null) {
+			throw new MSException(ErrorCode.NOT_FOUND, "User not found.");
+		}
+		
+		token = "";
+		user.setSessionKey(token);
+		userRepo.save(user);
+		
+		return ResponseHelper.createResponse("", "Logged out successfully.", "Failed to logout.");
 	}
 
 	@Override
-	public MSResponse updateUser(UserRequest req, String id) {
+	public MSResponse updateUser(UserRequest req, String id, String token) {
 		User user = null;
 		user = userRepo.findByIdAndIsDeleted(id, false);
 		

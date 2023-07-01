@@ -35,6 +35,17 @@ public class User {
     @Column
     private Boolean isDeleted=false;
     
+    @Column
+    private String sessionKey="";
+    
+	public String getSessionKey() {
+		return sessionKey;
+	}
+
+	public void setSessionKey(String sessionKey) {
+		this.sessionKey = sessionKey;
+	}
+
 	@Column
     private List<String> transaction_ids = new ArrayList<>();
     

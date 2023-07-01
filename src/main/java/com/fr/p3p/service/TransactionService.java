@@ -15,4 +15,6 @@ public interface TransactionService {
 	
 	MSResponse getPurchasesByUserId(String id);
 
+	MSResponse deletePurchase(String id);
+
 }

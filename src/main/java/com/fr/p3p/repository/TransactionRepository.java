@@ -10,4 +10,6 @@ import com.fr.p3p.model.TransactionHistory;
 public interface TransactionRepository extends JpaRepository<TransactionHistory, String> {
 	List<TransactionHistory> findByUserId(String UserId);
 	List<TransactionHistory> findByPurchaseDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+	List<TransactionHistory> findByIsDeleted(boolean b);
+	TransactionHistory findByIdAndIsDeleted(String id, boolean b);
 }

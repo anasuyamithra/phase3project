@@ -12,6 +12,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 	User findByUsernameAndIsDeleted(String username, Boolean isDeleted);
 	User findByEmailAndIsDeleted(String username, Boolean isDeleted);
 	User findByIdAndIsDeleted(String id, Boolean isDeleted);
-	public MSResponse getUserById(String id);
+	MSResponse getUserById(String id);
 	List<User> findByIsDeleted(boolean IsDeleted);
+	User findBySessionKey(String token);
+	
 }

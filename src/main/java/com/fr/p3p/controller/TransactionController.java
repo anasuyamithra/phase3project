@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,6 +46,11 @@ public class TransactionController {
 		//USE FORMAT AS FOLLOWS: startDate=2023-06-27T09:00:00     endDate=2023-06-28T18:00:00   (YYYY-MM-DDTHH:MM:SS)
 
 		return transService.getPurchasesByDate(startDate, endDate);
+	}
+	
+	@DeleteMapping("/{id}")
+	public MSResponse deletePurchaseReport(@PathVariable String id) {
+		return transService.deletePurchase(id);
 	}
 	
 }

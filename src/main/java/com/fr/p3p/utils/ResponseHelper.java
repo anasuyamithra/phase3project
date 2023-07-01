@@ -14,7 +14,9 @@ public class ResponseHelper {
 			result.setMessage(successMessage);
 			result.setData(data);
 		} else {
-			throw new MSException(ErrorCode.INTERNAL_SERVER_ERROR, errorMessage);
+			result.setSuccess(false);
+			result.setMessage(errorMessage);
+			result.setData(data);
 		}
 		return result;
 	}

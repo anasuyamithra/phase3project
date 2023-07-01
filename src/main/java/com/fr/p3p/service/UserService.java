@@ -6,9 +6,10 @@ import com.fr.p3p.model.response.MSResponse;
 
 public interface UserService {
 	public MSResponse addUser(UserRequest req);
-	public MSResponse getAllUsers();
-	public MSResponse getUserById(String id);
-	public MSResponse deleteUser(String id);
+	public MSResponse getAllUsers(String token);
+	public MSResponse getUserById(String id, String token);
+	public MSResponse deleteUser(String id, String token);
 	public MSResponse login(AuthRequest req);
-	public MSResponse updateUser(UserRequest req, String id);
+	public MSResponse updateUser(UserRequest req, String id, String token);
+	public MSResponse logout(String token);
 }

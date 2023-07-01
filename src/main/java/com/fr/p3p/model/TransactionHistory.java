@@ -30,6 +30,19 @@ public class TransactionHistory {
 
     @Column(name = "quantity")
     private int quantity;
+    
+    @Column(nullable = false)
+    private Boolean isDeleted=false;
+    
+    
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 
 	public String getProduct_id() {
 		return productId;
