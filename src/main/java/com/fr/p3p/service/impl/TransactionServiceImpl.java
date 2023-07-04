@@ -2,13 +2,16 @@ package com.fr.p3p.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fr.p3p.model.Product;
 import com.fr.p3p.model.TransactionHistory;
 import com.fr.p3p.model.request.TransactionRequest;
 import com.fr.p3p.model.response.MSResponse;
+import com.fr.p3p.repository.ProductRepository;
 import com.fr.p3p.repository.TransactionRepository;
 import com.fr.p3p.service.TransactionService;
 import com.fr.p3p.utils.AuthUtils;
@@ -24,12 +27,21 @@ public class TransactionServiceImpl implements TransactionService {
 	TransactionRepository transRepo;
 	
 	@Autowired
+	ProductRepository productRepo;
+	
+	@Autowired
 	AuthUtils auth; 
 	
 	public MSResponse createPurchase(TransactionRequest req) {
 		TransactionHistory trans = new TransactionHistory();
+		Product cat = productRepo.findByIdAndIsDeleted(req.getProduct_id(), false);
+		
+		if(cat == null) {
+			throw new MSException(ErrorCode.NOT_FOUND, "Product doesn't exist.");
+		}
 		
 		trans.setProduct_id(req.getProduct_id());
+		trans.setCategory(cat.getCategory());
 		trans.setQuantity(req.getQuantity());
 		trans.setUser_id(req.getUser_id());
 		trans.setPurchaseDate(LocalDateTime.now());
@@ -54,8 +66,13 @@ public class TransactionServiceImpl implements TransactionService {
 		List<TransactionHistory> purchaseList = transRepo.findByPurchaseDateBetween(startDate, endDate);
 		return ResponseHelper.createResponse(purchaseList, "Transactions retrieved successfully.", "Failed to retrieve transactions."); 
 	}
+	
+	public MSResponse getPurchasesByCategory(String cat) {
+		
+		List<TransactionHistory> purchaseList = transRepo.findByCategory(cat);
+		return ResponseHelper.createResponse(purchaseList, "Transactions retrieved successfully.", "Failed to retrieve transactions."); 
+	}
 
-	@Override
 	public MSResponse deletePurchase(String id, String token) {
 		String s = auth.checkAuth(token);
 		TransactionHistory trans = null;

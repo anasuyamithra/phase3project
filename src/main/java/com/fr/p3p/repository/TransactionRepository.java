@@ -12,4 +12,5 @@ public interface TransactionRepository extends JpaRepository<TransactionHistory,
 	List<TransactionHistory> findByPurchaseDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 	List<TransactionHistory> findByIsDeleted(boolean b);
 	TransactionHistory findByIdAndIsDeleted(String id, boolean b);
+	List<TransactionHistory> findByCategory(String cat);
 }

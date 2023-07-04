@@ -32,9 +32,20 @@ public class TransactionHistory {
     private int quantity;
     
     @Column(nullable = false)
+    private String category;
+    
+    @Column(nullable = false)
     private Boolean isDeleted=false;
     
     
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
 	public Boolean getIsDeleted() {
 		return isDeleted;
