@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.p3p.model.request.AuthRequest;
+import com.fr.p3p.model.request.PassChangeRequest;
 import com.fr.p3p.model.request.UserRequest;
 import com.fr.p3p.model.response.MSResponse;
 import com.fr.p3p.service.UserService;
@@ -55,6 +56,11 @@ public class UserController {
 	public MSResponse updateUser(@RequestBody UserRequest req,
 									@PathVariable String id, @RequestParam String token) {
 		return userService.updateUser(req, id, token);
+	}
+	
+	@PutMapping("/pass-change")
+	public MSResponse changePassword(@RequestParam String token, @RequestBody PassChangeRequest passchange) {
+		return userService.verifyOldPass(passchange, token);
 	}
 	
 	@PostMapping("/logout")

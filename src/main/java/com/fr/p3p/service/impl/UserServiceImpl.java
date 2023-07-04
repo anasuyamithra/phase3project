@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.fr.p3p.model.User;
 import com.fr.p3p.model.request.AuthRequest;
+import com.fr.p3p.model.request.PassChangeRequest;
 import com.fr.p3p.model.request.UserRequest;
 import com.fr.p3p.model.response.MSResponse;
 import com.fr.p3p.repository.UserRepository;
@@ -111,7 +112,7 @@ public class UserServiceImpl implements UserService {
 		return ResponseHelper.createResponse("", "Logged out successfully.", "Failed to logout.");
 	}
 
-	@Override
+	
 	public MSResponse updateUser(UserRequest req, String id, String token) {
 		User user = null;
 		user = userRepo.findByIdAndIsDeleted(id, false);
@@ -136,6 +137,29 @@ public class UserServiceImpl implements UserService {
 		userRepo.save(user);
 		
 		return ResponseHelper.createResponse(user, "User updated successfully.", "Failed to update user.");
+	}
+
+
+	public MSResponse verifyOldPass(PassChangeRequest passchange, String token) {
+		User user=null;
+		user=userRepo.findBySessionKey(token);
+		
+		if(passchange.getOldPass().isEmpty()) {
+			throw new MSException(ErrorCode.BAD_REQUEST, "Old password field is empty.");
+		}
+		
+		if(passchange.getNewPass().isEmpty()) {
+			throw new MSException(ErrorCode.BAD_REQUEST, "New password field is empty.");
+		}
+		
+		if(!passchange.getOldPass().equals(user.getPassword())) {
+			throw new MSException(ErrorCode.BAD_REQUEST, "Old password entered is wrong.");
+		}
+		
+		user.setPassword(passchange.getNewPass());
+		userRepo.save(user);
+		
+		return ResponseHelper.createResponse(user, "Password updated successfully.", "Failed to update password.");
 	}
 
 }
