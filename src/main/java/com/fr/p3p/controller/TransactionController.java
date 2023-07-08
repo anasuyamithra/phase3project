@@ -26,7 +26,7 @@ public class TransactionController {
 	
 	@PostMapping
 	public MSResponse createPurchase(@RequestBody TransactionRequest req, @RequestParam String token) {
-		return transService.createPurchase(req);
+		return transService.createPurchase(req, token);
 	}
 	
 	@GetMapping
@@ -37,6 +37,11 @@ public class TransactionController {
 	@GetMapping("/{id}")
 	public MSResponse getPurchasesByUserId(@PathVariable String id, @RequestParam String token) {
 		return transService.getPurchasesByUserId(id);
+	}
+	
+	@GetMapping("/category")
+	public MSResponse getPurchasesByCategory(@RequestParam String cat, @RequestParam String token) {
+		return transService.getPurchasesByCategory(cat);
 	}
 	
 	@GetMapping("/date")

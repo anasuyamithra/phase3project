@@ -7,7 +7,7 @@ import com.fr.p3p.model.response.MSResponse;
 
 public interface TransactionService {
 
-	MSResponse createPurchase(TransactionRequest req);
+	MSResponse createPurchase(TransactionRequest req, String token);
 
 	MSResponse getAllPurchases(String token);
 	
@@ -16,5 +16,7 @@ public interface TransactionService {
 	MSResponse getPurchasesByUserId(String id);
 
 	MSResponse deletePurchase(String id, String token);
+	
+	MSResponse getPurchasesByCategory(String cat);
 
 }

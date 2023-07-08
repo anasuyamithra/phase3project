@@ -31,6 +31,9 @@ public class ProductServiceImpl implements ProductService{
 	
 	public MSResponse getProductByCategory(String categories) {
 		List<Product> products = productRepo.findByCategory(categories);
+		if(products.isEmpty()) {
+			throw new MSException(ErrorCode.BAD_REQUEST, "No products in this category.");
+		}
 		return ResponseHelper.createResponse(products, "Products retrieved successfully.", "Failed to retrieve products.");
 	}
 	

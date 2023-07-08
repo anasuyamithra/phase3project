@@ -19,7 +19,7 @@ public class TransactionHistory {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String productId;
 
     @Column(nullable = false)
@@ -31,7 +31,7 @@ public class TransactionHistory {
     @Column(name = "quantity")
     private int quantity;
     
-    @Column(nullable = false)
+    @Column(name="category",nullable = false)
     private String category;
     
     @Column(nullable = false)
